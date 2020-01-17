@@ -1,35 +1,71 @@
 class EventEmitter {
   _events = {};
 
-  on(event, eventHandler) {
-    return this.addEventListener(event, eventHandler);
+  on(type, listener) {
+    return this.addEventListener(type, listener);
   }
 
-  addEventListener(event, eventHandler) {
-    this._events[event] = this._events[event] || [];
-    this._events[event].push(eventHandler);
+  addEventListener(type, listener) {
+    this._events[type] = this._events[type] || [];
+    this._events[type].push(listener);
   }
 
-  removeListener(event, eventHandler) {
+  off(type, listener) {
+    return this.removeListener(type, listener);
+  }
+
+  // Return this for chaining purposes
+  removeListener(type, listener) {
+    let removedListener;
+
     const events = this._events;
     if (events === undefined) return this;
 
-    const eventHandlerList = events[event];
-    if (events === undefined) return this;
+    const list = events[type];
+    if (list === undefined) return this;
 
-    if (
-      eventHandlerList === eventHandler ||
-      eventHandlerList.eventHandler === eventHandler
-    ) {
-      console.log("");
+    for (let i = list.length - 1; i >= 0; i--) {
+      if (list[i] === listener) {
+        removedListener = listener[i].listener;
+        list.splice(i, 1);
+        this.emit("removedListener", type, removedListener);
+        break;
+      }
     }
+
+    return this;
   }
 
-  once(event, eventHandler) {}
+  once(type, listener) {
+    this.listener[type] = this.listener[type] || [];
 
-  emit(event, eventHandler) {}
+    const onceWrapper = () => {
+      listener();
+      this.off(type, onceWrapper);
+    };
 
-  listenerCount(event) {}
+    this.listener[type].push(onceWrapper);
+    return this;
+  }
 
-  rawListeners(event) {}
+  emit(type, ...args) {
+    let eventListeners = this._events[type] || [];
+    if (!eventListeners) return false;
+
+    const length = eventListeners.length;
+    for (let i = 0; i < length; i++) {
+      Reflect.apply(eventListeners[i], this, args);
+    }
+
+    return true;
+  }
+
+  listenerCount(type) {
+    let eventListeners = this._events[type] || [];
+    return eventListeners.length;
+  }
+
+  rawListeners(type) {
+    return this._events[type];
+  }
 }
