@@ -2,12 +2,12 @@
   "name": "event-emitter",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "EventEmitter.js",
   "directories": {
     "test": "test"
   },
   "scripts": {
-    "test": "node index.test"
+    "test": "node events.test"
   },
   "repository": {
     "type": "git",
@@ -18,5 +18,8 @@
   "bugs": {
     "url": "https://github.com/iankressin/event-emitter-bootleg/issues"
   },
-  "homepage": "https://github.com/iankressin/event-emitter-bootleg#readme"
+  "homepage": "https://github.com/iankressin/event-emitter-bootleg#readme",
+  "dependencies": {
+    "tape": "^4.13.0"
+  }
 }
