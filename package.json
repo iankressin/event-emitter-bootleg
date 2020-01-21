@@ -7,7 +7,7 @@
     "test": "test"
   },
   "scripts": {
-    "test": "node events.test"
+    "test": "node test/events.test"
   },
   "repository": {
     "type": "git",
