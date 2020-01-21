@@ -26,7 +26,7 @@ class EventEmitter {
 
     for (let i = list.length - 1; i >= 0; i--) {
       if (list[i] === listener) {
-        removedListener = listener[i].listener;
+        removedListener = list[i];
         list.splice(i, 1);
         this.emit("removedListener", type, removedListener);
         break;
@@ -37,14 +37,14 @@ class EventEmitter {
   }
 
   once(type, listener) {
-    this.listener[type] = this.listener[type] || [];
+    this._events[type] = this._events[type] || [];
 
     const onceWrapper = () => {
       listener();
       this.off(type, onceWrapper);
     };
 
-    this.listener[type].push(onceWrapper);
+    this._events[type].push(onceWrapper);
     return this;
   }
 
@@ -69,3 +69,5 @@ class EventEmitter {
     return this._events[type];
   }
 }
+
+module.exports = EventEmitter;

@@ -1,0 +1,22 @@
+{
+  "name": "event-emitter",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "node index.test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/iankressin/event-emitter-bootleg.git"
+  },
+  "author": "iankressin",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/iankressin/event-emitter-bootleg/issues"
+  },
+  "homepage": "https://github.com/iankressin/event-emitter-bootleg#readme"
+}
