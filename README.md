@@ -1,6 +1,6 @@
 # Event Emitter Bootleg
 
-This is a simple implementation of node's EventEmitter basic methods that runs in any environment.
+This is a simple implementation of node's EventEmitter basic methods, that runs on any environment.
 
 ## Available methods
 - on(eventName, listener);
