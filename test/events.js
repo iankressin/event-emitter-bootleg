@@ -7,45 +7,60 @@ test("Register event", t => {
 
   em.on(eventName, () => 1);
   t.assert(em.listenerCount(eventName) === 1, "Correctly registered event");
-  t.end()
+  t.end();
 });
 
 test("Emit event", t => {
   const em = new EventEmitter();
   const eventName = "testEvent";
-  let result; 
+  let result;
 
-  em.on(eventName, () => result = 1);
+  em.on(eventName, () => (result = 1));
   em.emit(eventName);
 
   t.assert(result === 1, "Event was correctly emitted");
-  t.end()
-})
+  t.end();
+});
 
 test("Unregister event", t => {
   const em = new EventEmitter();
   const eventName = "testEvent";
-  
-  const listener = () => 1
+
+  const listener = () => 1;
 
   em.on(eventName, listener);
-  t.assert(em.listenerCount(eventName) === 1, "Registered")
+  t.assert(em.listenerCount(eventName) === 1, "Registered");
 
-  em.removeListener(eventName, listener)
-  t.assert(em.listenerCount(eventName) === 0, "Unregistered")
+  em.removeListener(eventName, listener);
+  t.assert(em.listenerCount(eventName) === 0, "Unregistered");
 
-  t.end()
-})
+  t.end();
+});
 
 test("Once event", t => {
   const em = new EventEmitter();
   const eventName = "event";
 
-  em.once(eventName, () => null)
+  em.once(eventName, () => null);
   t.assert(em.listenerCount(eventName) === 1, "Correctly registered event");
 
   em.emit(eventName);
   t.assert(em.listenerCount(eventName) === 0, "Correctly emited once");
-  
+
   t.end();
-})
+});
+
+test("Raw listeners", t => {
+  const em = new EventEmitter();
+  const eventName = "testEvent";
+  const listener = () => 1;
+
+  em.on(eventName, listener);
+  const listeners = em.rawListeners(eventName);
+
+  t.assert(
+    listeners.length === 1 && listeners.includes(listener),
+    "Contains listener"
+  );
+  t.end();
+});
